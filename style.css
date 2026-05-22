@@ -569,15 +569,34 @@ button {
 .logo {
   display: flex;
   align-items: center;
-  height: 50px;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.04));
+  height: 64px; /* Aumentado de 50px para 64px para dar maior destaque */
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
+  transition: var(--transition-fast);
 }
 
 .logo img {
   height: 100%;
   width: auto;
   object-fit: contain;
+  filter: brightness(0.55) contrast(1.2); /* Escurece a logo e aumenta o contraste para melhor destaque em fundos claros */
+  transition: var(--transition-fast);
 }
+
+/* Quando o cabeçalho encolhe com o scroll, reduzimos proporcionalmente */
+.header.scrolled .logo {
+  height: 52px;
+}
+
+/* Ajustes responsivos para telas móveis */
+@media (max-width: 768px) {
+  .logo {
+    height: 52px; /* Logo ligeiramente menor no mobile para evitar apertar o menu */
+  }
+  .header.scrolled .logo {
+    height: 46px;
+  }
+}
+
 
 .nav {
   display: flex;
