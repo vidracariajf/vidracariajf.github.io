@@ -2665,4 +2665,94 @@ button {
   }
 }
 
+/* ==========================================================================
+   14. CORREÇÕES DE RESPONSIVIDADE (TEXTOS E BOTÕES) - DEFINITIVE FIXES
+   ========================================================================== */
+@media (max-width: 580px) {
+  /* Global button wrapping and spacing corrections to prevent cut-offs */
+  .btn,
+  .btn-whatsapp,
+  .btn-outline,
+  .btn-dark,
+  .btn-whatsapp-dark,
+  .modal-actions .btn {
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    text-align: center !important;
+    padding: 14px 20px !important;
+    font-size: 0.92rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    line-height: 1.4 !important;
+    gap: 8px !important;
+  }
+
+  /* Ensure button icons don't shrink when text wraps */
+  .btn svg,
+  .btn-whatsapp svg,
+  .btn-outline svg,
+  .btn-dark svg,
+  .btn-whatsapp-dark svg {
+    flex-shrink: 0 !important;
+  }
+
+  /* Correct hero visual glass card overflow and prevent layout clipping */
+  .glass-card-wrapper {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 20px 15px !important;
+  }
+
+  /* Prevent text clipping in checklist items and bullet lists */
+  .problems-item {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    max-width: 100% !important;
+  }
+
+  .problems-item span {
+    white-space: normal !important;
+    display: inline-block !important;
+    line-height: 1.4 !important;
+    max-width: calc(100% - 30px) !important;
+  }
+}
+
+@media (max-width: 380px) {
+  /* Special layout adjustments for ultra-small mobile screens (e.g., iPhone SE) */
+  .hero-content h1 {
+    font-size: 1.45rem !important;
+  }
+
+  .panel-content {
+    padding: 20px 12px !important;
+  }
+
+  .section-banner-title {
+    padding: 14px 16px !important;
+  }
+
+  .section-banner-title h2 {
+    font-size: 1rem !important;
+  }
+
+  .btn,
+  .btn-whatsapp,
+  .btn-outline,
+  .btn-dark,
+  .btn-whatsapp-dark {
+    font-size: 0.88rem !important;
+    padding: 12px 14px !important;
+    gap: 6px !important;
+  }
+}
+
+
 
