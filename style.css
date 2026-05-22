@@ -68,6 +68,7 @@ html {
   scroll-padding-top: 80px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 body {
@@ -242,6 +243,15 @@ button {
   }
   .section-header p {
     font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header h2 {
+    font-size: 1.85rem;
+  }
+  .section-header p {
+    font-size: 0.95rem;
   }
 }
 
@@ -603,6 +613,21 @@ button {
   }
 }
 
+@media (max-width: 480px) {
+  .logo {
+    height: 44px;
+  }
+  .header.scrolled .logo {
+    height: 38px;
+  }
+  .header {
+    height: 74px;
+  }
+  .header.scrolled {
+    height: 60px;
+  }
+}
+
 
 .nav {
   display: flex;
@@ -688,7 +713,8 @@ button {
   .nav {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
+    transform: translateX(100%);
     width: 290px;
     height: 100vh;
     background-color: var(--branco);
@@ -698,11 +724,11 @@ button {
     align-items: flex-start;
     padding: 120px 40px 40px 40px;
     gap: 40px;
-    transition: var(--transition-normal);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 
   .nav.active {
-    right: 0;
+    transform: translateX(0);
   }
 
   .nav-list {
@@ -1101,7 +1127,11 @@ button {
     padding: 120px 0 60px 0;
   }
   .hero-content h1 {
-    font-size: 1.65rem;
+    font-size: 1.6rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    letter-spacing: -0.5px;
+    line-height: 1.3;
   }
   .hero-actions {
     flex-direction: column;
@@ -1195,48 +1225,30 @@ button {
   }
 }
 
-@media (max-width: 480px) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-  .service-card {
-    padding: 14px 10px;
-  }
-  .service-card h3 {
-    font-size: 0.88rem;
-    margin-bottom: 6px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    -webkit-hyphens: auto;
-    -ms-hyphens: auto;
-    hyphens: auto;
-  }
-  .service-card p {
-    font-size: 0.78rem;
-    line-height: 1.4;
-  }
-  .service-card .icon-wrapper {
-    width: 36px;
-    height: 36px;
-    margin-bottom: 10px;
-  }
-  .service-card .icon-wrapper svg {
-    width: 16px;
-    height: 16px;
-  }
-}
-
-@media (max-width: 350px) {
+@media (max-width: 580px) {
   .services-grid {
     grid-template-columns: 1fr;
-    gap: 15px;
+    gap: 16px;
   }
   .service-card {
-    padding: 20px 16px;
+    padding: 22px 18px;
   }
   .service-card h3 {
-    font-size: 1.05rem;
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+  }
+  .service-card p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+  .service-card .icon-wrapper {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 12px;
+  }
+  .service-card .icon-wrapper svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -1408,7 +1420,7 @@ button {
 
 .problems-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
   font-size: 0.95rem;
   font-weight: 500;
@@ -1432,6 +1444,7 @@ button {
   transition: var(--transition-fast);
   width: 22px;
   height: 22px;
+  margin-top: 3px; /* Alinha com a primeira linha do texto */
 }
 
 .problems-item:hover svg {
@@ -1462,19 +1475,22 @@ button {
   }
 }
 
-@media (max-width: 480px) {
-  .problems-image-wrapper {
-    height: 260px;
+@media (max-width: 640px) {
+  .problems-list {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
 
 @media (max-width: 580px) {
-  .problems-list {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
   .problems-content h2 {
     font-size: 2.15rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .problems-image-wrapper {
+    height: 260px;
   }
 }
 
@@ -1563,13 +1579,34 @@ button {
   line-height: 1;
 }
 
+@media (max-width: 991px) {
+  .diferencial-card {
+    padding: 26px;
+    gap: 18px;
+  }
+}
+
 @media (max-width: 768px) {
   .diferenciais-footer {
-    padding: 0 15px;
+    padding: 30px 15px 0 15px;
   }
   .diferenciais-footer::before {
-    font-size: 4rem;
-    top: -30px;
+    font-size: 4.5rem;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 580px) {
+  .diferencial-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 22px 18px;
+  }
+  .diferencial-card .icon-wrapper {
+    margin-bottom: 0;
   }
 }
 
@@ -1873,11 +1910,12 @@ button {
     padding: 20px 16px;
   }
   .about-stats {
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
     gap: 12px;
     padding-top: 24px;
   }
   .stat-number {
-    font-size: 2rem;
+    font-size: 1.85rem;
   }
   .stat-label {
     font-size: 0.78rem;
