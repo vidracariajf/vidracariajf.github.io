@@ -1089,7 +1089,7 @@ button {
   }
   .hero::before {
     clip-path: none; /* Full background overlay on mobile */
-    background: linear-gradient(180deg, rgba(17, 17, 17, 0.94) 0%, rgba(24, 24, 27, 0.96) 100%);
+    background: linear-gradient(180deg, rgba(17, 17, 17, 0.82) 0%, rgba(20, 20, 20, 0.70) 50%, rgba(24, 24, 27, 0.85) 100%);
   }
   .hero-grid {
     grid-template-columns: 1fr;
