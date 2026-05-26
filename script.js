@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+﻿document.addEventListener('DOMContentLoaded', () => {
   
   /* ==========================================================================
      1. FIXED HEADER ON SCROLL
@@ -190,6 +190,27 @@ document.addEventListener('DOMContentLoaded', () => {
         autoSlide = setInterval(() => goToSlide((currentSlide + 1) % heroBgs.length), 5000);
       });
     });
+
+    const prevBtn = document.getElementById('heroPrevBtn');
+    const nextBtn = document.getElementById('heroNextBtn');
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        clearInterval(autoSlide);
+        const prevIndex = (currentSlide - 1 + heroBgs.length) % heroBgs.length;
+        goToSlide(prevIndex);
+        autoSlide = setInterval(() => goToSlide((currentSlide + 1) % heroBgs.length), 5000);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        clearInterval(autoSlide);
+        const nextIndex = (currentSlide + 1) % heroBgs.length;
+        goToSlide(nextIndex);
+        autoSlide = setInterval(() => goToSlide((currentSlide + 1) % heroBgs.length), 5000);
+      });
+    }
 
     let autoSlide = setInterval(() => {
       goToSlide((currentSlide + 1) % heroBgs.length);
@@ -393,4 +414,5 @@ document.addEventListener('DOMContentLoaded', () => {
     adjustWhatsappFloat(); // Initial check on load
   }
 });
+
 
