@@ -1,4 +1,4 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    DESIGN SYSTEM & VARIABLES - PRETO, CINZA & DETALHES BRANCOS (PREMIUM EDIT)
    ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap');
@@ -2855,6 +2855,9 @@ button {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .lightbox-overlay.active {
@@ -2884,6 +2887,9 @@ button {
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255, 255, 255, 0.2);
   object-fit: contain;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .lightbox-caption {
@@ -2922,6 +2928,9 @@ button {
   transition: color 0.25s ease, transform 0.25s ease;
   font-weight: 200;
   z-index: 50;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .lightbox-close:hover {
@@ -2945,6 +2954,9 @@ button {
   cursor: pointer;
   transition: var(--transition-normal);
   z-index: 40;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .lightbox-arrow:hover {
