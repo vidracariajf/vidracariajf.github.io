@@ -2060,20 +2060,20 @@ button {
 }
 
 /* Active accordion styles */
-.faq-item.active {
+.faq-item.open {
   border-color: var(--cinza-claro);
   box-shadow: var(--shadow-md), var(--glow-light);
 }
 
-.faq-item.active .faq-trigger h3 {
+.faq-item.open .faq-trigger h3 {
   color: var(--cinza-claro);
 }
 
-.faq-item.active .faq-panel {
+.faq-item.open .faq-panel {
   max-height: 250px; /* Safe height to expand accordion smoothly without JS layout calculations */
 }
 
-.faq-item.active .faq-icon-box {
+.faq-item.open .faq-icon-box {
   transform: rotate(180deg);
   background-color: var(--cinza-claro);
   color: var(--branco);
@@ -2081,7 +2081,7 @@ button {
   box-shadow: 0 0 10px rgba(17, 17, 17, 0.15);
 }
 
-.faq-item.active .faq-content {
+.faq-item.open .faq-content {
   color: var(--cinza-claro);
 }
 
@@ -2813,6 +2813,7 @@ button {
     gap: 6px !important;
   }
 }
+
 
 
 

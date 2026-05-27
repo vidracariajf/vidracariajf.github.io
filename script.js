@@ -96,20 +96,20 @@
     if (trigger) {
       trigger.addEventListener('click', (e) => {
         e.preventDefault();
-        const isOpen = item.classList.contains('active');
+        const isOpen = item.classList.contains('open');
 
         // Close all other items
         faqItems.forEach(otherItem => {
           if (otherItem !== item) {
-            otherItem.classList.remove('active');
+            otherItem.classList.remove('open');
           }
         });
 
         // Toggle current item
         if (isOpen) {
-          item.classList.remove('active');
+          item.classList.remove('open');
         } else {
-          item.classList.add('active');
+          item.classList.add('open');
         }
       });
     }
@@ -413,6 +413,7 @@
     adjustWhatsappFloat(); // Initial check on load
   }
 });
+
 
 
 
