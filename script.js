@@ -419,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-      /* ==========================================================================
+        /* ==========================================================================
      10. PORTFOLIO LIGHTBOX GALLERY
      ========================================================================== */
   const portfolioItems = document.querySelectorAll('.portfolio-item');
@@ -433,21 +433,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (lightbox && portfolioItems.length > 0) {
     let currentGalleryIndex = 0;
-    const galleryData = [];
+    let activeGalleryData = [];
 
-    // Harvest data from all portfolio items
-    portfolioItems.forEach((item, index) => {
-      item.setAttribute('data-index', index);
+    // Vincula o clique de cada card da galeria principal
+    portfolioItems.forEach(item => {
       item.style.cursor = 'pointer';
-      
-      const src = item.getAttribute('data-src');
-      const title = item.getAttribute('data-title');
-      const category = item.getAttribute('data-category');
-      
-      galleryData.push({ src, title, category });
-
       item.addEventListener('click', () => {
-        currentGalleryIndex = index;
+        const galleryName = item.getAttribute('data-gallery');
+        if (!galleryName) return;
+
+        // Busca todas as imagens correspondentes (o card visÃ­vel + as imagens extras ocultas)
+        const galleryElements = document.querySelectorAll([data-gallery="\"]);
+        activeGalleryData = [];
+
+        galleryElements.forEach(el => {
+          const src = el.getAttribute('data-src');
+          const title = el.getAttribute('data-title');
+          const category = el.getAttribute('data-category');
+          activeGalleryData.push({ src, title, category });
+        });
+
+        // O Ã­ndice inicial serÃ¡ sempre 0 (o card principal que foi clicado)
+        currentGalleryIndex = 0;
         openLightbox();
       });
     });
@@ -464,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateLightboxContent() {
-      const data = galleryData[currentGalleryIndex];
+      const data = activeGalleryData[currentGalleryIndex];
       if (data) {
         lightboxImg.src = data.src;
         lightboxImg.alt = data.title;
@@ -474,12 +481,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showPrev() {
-      currentGalleryIndex = (currentGalleryIndex - 1 + galleryData.length) % galleryData.length;
+      if (activeGalleryData.length === 0) return;
+      currentGalleryIndex = (currentGalleryIndex - 1 + activeGalleryData.length) % activeGalleryData.length;
       updateLightboxContent();
     }
     
     function showNext() {
-      currentGalleryIndex = (currentGalleryIndex + 1) % galleryData.length;
+      if (activeGalleryData.length === 0) return;
+      currentGalleryIndex = (currentGalleryIndex + 1) % activeGalleryData.length;
       updateLightboxContent();
     }
 
@@ -493,7 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Navegacao via Teclado
+    // NavegaÃ§Ã£o via Teclado
     document.addEventListener('keydown', (e) => {
       if (lightbox.classList.contains('active')) {
         if (e.key === 'Escape') closeLightbox();
