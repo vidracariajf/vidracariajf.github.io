@@ -2823,3 +2823,175 @@ button {
 
 
 
+
+/* ==========================================================================
+   15. PORTFOLIO LIGHTBOX GALLERY STYLES
+   ========================================================================== */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 10, 10, 0.94);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.lightbox-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0.92) translateY(10px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lightbox-overlay.active .lightbox-content {
+  transform: scale(1) translateY(0);
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 65vh;
+  border-radius: var(--radius-md);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255, 255, 255, 0.2);
+  object-fit: contain;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lightbox-caption {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--branco);
+}
+
+.lightbox-caption span {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #CCCCCC;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.lightbox-caption h4 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--branco) !important;
+  letter-spacing: -0.5px;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 30px;
+  right: 35px;
+  background: none;
+  border: none;
+  font-size: 45px;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.25s ease, transform 0.25s ease;
+  font-weight: 200;
+  z-index: 50;
+}
+
+.lightbox-close:hover {
+  color: var(--branco);
+  transform: rotate(90deg) scale(1.1);
+}
+
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 58px;
+  height: 58px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  z-index: 40;
+}
+
+.lightbox-arrow:hover {
+  background-color: var(--branco);
+  color: #111111;
+  border-color: var(--branco);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.lightbox-arrow.prev {
+  left: 40px;
+}
+
+.lightbox-arrow.next {
+  right: 40px;
+}
+
+@media (max-width: 991px) {
+  .lightbox-arrow {
+    width: 46px;
+    height: 46px;
+    background-color: rgba(10, 10, 10, 0.6);
+  }
+  .lightbox-arrow.prev {
+    left: 15px;
+  }
+  .lightbox-arrow.next {
+    right: 15px;
+  }
+  .lightbox-close {
+    top: 20px;
+    right: 25px;
+    font-size: 38px;
+  }
+}
+
+@media (max-width: 480px) {
+  .lightbox-arrow {
+    width: 38px;
+    height: 38px;
+    top: auto;
+    bottom: 20px;
+    transform: none;
+  }
+  .lightbox-arrow.prev {
+    left: calc(50% - 90px);
+  }
+  .lightbox-arrow.next {
+    right: calc(50% - 90px);
+  }
+  .lightbox-content {
+    max-height: 70vh;
+  }
+  .lightbox-content img {
+    max-height: 50vh;
+  }
+  .lightbox-caption {
+    margin-top: 15px;
+    margin-bottom: 60px;
+  }
+}
+
