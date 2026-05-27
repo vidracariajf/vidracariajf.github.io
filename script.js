@@ -92,9 +92,8 @@
 
   faqItems.forEach(item => {
     const trigger = item.querySelector('.faq-trigger');
-    const panel = item.querySelector('.faq-panel');
 
-    if (trigger && panel) {
+    if (trigger) {
       trigger.addEventListener('click', (e) => {
         e.preventDefault();
         const isOpen = item.classList.contains('active');
@@ -103,20 +102,14 @@
         faqItems.forEach(otherItem => {
           if (otherItem !== item) {
             otherItem.classList.remove('active');
-            const otherPanel = otherItem.querySelector('.faq-panel');
-            if (otherPanel) {
-              otherPanel.style.maxHeight = null;
-            }
           }
         });
 
         // Toggle current item
         if (isOpen) {
           item.classList.remove('active');
-          panel.style.maxHeight = null;
         } else {
           item.classList.add('active');
-          panel.style.maxHeight = panel.scrollHeight + 'px';
         }
       });
     }
@@ -420,6 +413,7 @@
     adjustWhatsappFloat(); // Initial check on load
   }
 });
+
 
 
 

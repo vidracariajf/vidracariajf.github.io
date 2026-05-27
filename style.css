@@ -2069,6 +2069,10 @@ button {
   color: var(--cinza-claro);
 }
 
+.faq-item.active .faq-panel {
+  max-height: 250px; /* Safe height to expand accordion smoothly without JS layout calculations */
+}
+
 .faq-item.active .faq-icon-box {
   transform: rotate(180deg);
   background-color: var(--cinza-claro);
@@ -2809,6 +2813,7 @@ button {
     gap: 6px !important;
   }
 }
+
 
 
 
