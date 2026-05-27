@@ -1730,8 +1730,6 @@ button {
   border-bottom: 1px solid var(--cinza-escuro);
 }
 
-
-
 .portfolio-item-hidden {
   display: none !important;
 }
@@ -1830,9 +1828,7 @@ button {
 }
 
 @media (max-width: 991px) {
-  
-
-.portfolio-item-hidden {
+  .portfolio-item-hidden {
   display: none !important;
 }
 
@@ -1843,9 +1839,7 @@ button {
 }
 
 @media (max-width: 580px) {
-  
-
-.portfolio-item-hidden {
+  .portfolio-item-hidden {
   display: none !important;
 }
 

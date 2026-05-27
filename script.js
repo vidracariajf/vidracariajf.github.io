@@ -419,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-        /* ==========================================================================
+    /* ==========================================================================
      10. PORTFOLIO LIGHTBOX GALLERY
      ========================================================================== */
   const portfolioItems = document.querySelectorAll('.portfolio-item');
@@ -442,8 +442,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const galleryName = item.getAttribute('data-gallery');
         if (!galleryName) return;
 
-        // Busca todas as imagens correspondentes (o card visÃ­vel + as imagens extras ocultas)
-        const galleryElements = document.querySelectorAll([data-gallery="\"]);
+        // Busca todas as imagens correspondentes (o card visivel + as imagens extras ocultas)
+        const galleryElements = document.querySelectorAll('[data-gallery="' + galleryName + '"]');
         activeGalleryData = [];
 
         galleryElements.forEach(el => {
@@ -453,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
           activeGalleryData.push({ src, title, category });
         });
 
-        // O Ã­ndice inicial serÃ¡ sempre 0 (o card principal que foi clicado)
+        // O indice inicial sera sempre 0 (o card principal que foi clicado)
         currentGalleryIndex = 0;
         openLightbox();
       });
@@ -502,7 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // NavegaÃ§Ã£o via Teclado
+    // Navegacao via Teclado
     document.addEventListener('keydown', (e) => {
       if (lightbox.classList.contains('active')) {
         if (e.key === 'Escape') closeLightbox();
