@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   
   /* ==========================================================================
      1. FIXED HEADER ON SCROLL
@@ -419,8 +419,8 @@
 
 
 
-  /* ==========================================================================
-     10. PORTFOLIO LIGHTBOX GALLERY
+    /* ==========================================================================
+     10. PORTFOLIO LIGHTBOX GALLERY & FILTERS
      ========================================================================== */
   const portfolioItems = document.querySelectorAll('.portfolio-item');
   const lightbox = document.getElementById('portfolioLightbox');
@@ -431,23 +431,48 @@
   const lightboxPrevBtn = document.getElementById('lightboxPrevBtn');
   const lightboxNextBtn = document.getElementById('lightboxNextBtn');
 
+  // Logica dos Filtros de Categoria
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  if (filterBtns.length > 0 && portfolioItems.length > 0) {
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remover classe ativa de todos os botoes
+        filterBtns.forEach(b => b.classList.remove('active'));
+        // Adicionar classe ativa no botao clicado
+        btn.classList.add('active');
+        
+        const filterValue = btn.getAttribute('data-filter');
+        
+        portfolioItems.forEach(item => {
+          const itemSlug = item.getAttribute('data-slug');
+          if (filterValue === 'todos' || itemSlug === filterValue) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+        
+        // Re-sincronizar ScrollReveal para garantir exibicao correta
+        if (typeof ScrollReveal !== 'undefined') {
+          ScrollReveal().sync();
+        }
+      });
+    });
+  }
+
+  // Logica de Lightbox Dinamico (Respeita o Filtro Ativo)
   if (lightbox && portfolioItems.length > 0) {
     let currentGalleryIndex = 0;
-    const galleryData = [];
+    let currentVisibleItems = [];
 
-    // Harvest data from all portfolio items
-    portfolioItems.forEach((item, index) => {
-      item.setAttribute('data-index', index);
+    portfolioItems.forEach(item => {
       item.style.cursor = 'pointer';
-      
-      const src = item.getAttribute('data-src');
-      const title = item.getAttribute('data-title');
-      const category = item.getAttribute('data-category');
-      
-      galleryData.push({ src, title, category });
-
       item.addEventListener('click', () => {
-        currentGalleryIndex = index;
+        // Coleta apenas os itens visiveis no momento do clique (que nao possuem a classe hidden)
+        currentVisibleItems = Array.from(portfolioItems).filter(el => !el.classList.contains('hidden'));
+        // Encontra o indice correspondente ao item clicado
+        currentGalleryIndex = currentVisibleItems.indexOf(item);
+        
         openLightbox();
       });
     });
@@ -464,22 +489,28 @@
     }
 
     function updateLightboxContent() {
-      const data = galleryData[currentGalleryIndex];
-      if (data) {
-        lightboxImg.src = data.src;
-        lightboxImg.alt = data.title;
-        lightboxCategory.textContent = data.category;
-        lightboxTitle.textContent = data.title;
+      const activeItem = currentVisibleItems[currentGalleryIndex];
+      if (activeItem) {
+        const src = activeItem.getAttribute('data-src');
+        const title = activeItem.getAttribute('data-title');
+        const category = activeItem.getAttribute('data-category');
+        
+        lightboxImg.src = src;
+        lightboxImg.alt = title;
+        lightboxCategory.textContent = category;
+        lightboxTitle.textContent = title;
       }
     }
 
     function showPrev() {
-      currentGalleryIndex = (currentGalleryIndex - 1 + galleryData.length) % galleryData.length;
+      if (currentVisibleItems.length === 0) return;
+      currentGalleryIndex = (currentGalleryIndex - 1 + currentVisibleItems.length) % currentVisibleItems.length;
       updateLightboxContent();
     }
-
+    
     function showNext() {
-      currentGalleryIndex = (currentGalleryIndex + 1) % galleryData.length;
+      if (currentVisibleItems.length === 0) return;
+      currentGalleryIndex = (currentGalleryIndex + 1) % currentVisibleItems.length;
       updateLightboxContent();
     }
 
@@ -493,7 +524,7 @@
       }
     });
 
-    // Keyboard navigation
+    // Navegacao via Teclado
     document.addEventListener('keydown', (e) => {
       if (lightbox.classList.contains('active')) {
         if (e.key === 'Escape') closeLightbox();
@@ -502,4 +533,3 @@
       }
     });
   }
-
