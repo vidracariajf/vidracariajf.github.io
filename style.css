@@ -1164,7 +1164,7 @@ button {
     justify-content: center;
   }
   .hero-features {
-    align-items: center;
+    align-items: flex-start;
   }
   .hero-visual {
     margin-top: 20px;
@@ -2813,6 +2813,7 @@ button {
     gap: 6px !important;
   }
 }
+
 
 
 
