@@ -20,10 +20,10 @@
   <link rel="icon" type="image/png" href="https://i.ibb.co/GhKznfY/Design-sem-nome-2.webp">
 
   <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=1.0.11">
+  <link rel="stylesheet" href="style.css?v=1.0.12">
 
   <!-- JS Script -->
-  <script src="script.js?v=1.0.11" defer></script>
+  <script src="script.js?v=1.0.12" defer></script>
 </head>
 <body>
   <!-- Ambient background glass glows -->
@@ -925,48 +925,44 @@
     </button>
   </div>
 
-  <!-- Isolated script block for Solutions Inteligentes Popup Modals -->
+    <!-- Isolated script block for Solutions Inteligentes Popup Modals -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const solutionDetails = {
         'solucao-portas': {
-          title: "Solu\u00e7\u00f5es em Portas de Vidro",
-          desc: "Projetos sob medida, instala\u00e7\u00e3o premium e manuten\u00e7\u00e3o completa para portas pivotantes, de correr e portas com molas hidr\u00e1ulicas de piso ou a\u00e9reas. Trazemos sofistica\u00e7\u00e3o e m\u00e1xima seguran\u00e7a para o seu acesso.",
+          title: "Portas de Vidro",
+          desc: "Instala\u00e7\u00e3o e manuten\u00e7\u00e3o premium de portas pivotantes e de correr.",
           bullets: [
-            "Instala\u00e7\u00e3o de portas pivotantes de vidro com eixos em inox",
-            "Projetos de portas de correr com trilhos e roldanas de alto padr\u00e3o",
-            "Substitui\u00e7\u00e3o completa de fechaduras, puxadores e ferragens",
-            "Manuten\u00e7\u00e3o e alinhamento de portas que est\u00e3o arrastando ou desalinhadas"
+            "Instala\u00e7\u00e3o sob medida (pivotantes e de correr)",
+            "Troca e regulagem de fechaduras e puxadores",
+            "Manuten\u00e7\u00e3o de alinhamento e portas arrastando"
           ]
         },
         'solucao-box': {
-          title: "Solu\u00e7\u00f5es em Box de Banheiro",
-          desc: "Instala\u00e7\u00e3o de box novos em vidro temperado de alta seguran\u00e7a e manuten\u00e7\u00e3o preventiva/corretiva para banheiros modernos, seguros e funcionais.",
+          title: "Box de Banheiro",
+          desc: "Box novos em vidro temperado e manuten\u00e7\u00e3o preventiva completa.",
           bullets: [
-            "Box novos sob medida em vidro temperado de 8mm nas normas da ABNT",
-            "Diversidade de kits modernos (cromado, preto, branco, bronze, champagne)",
-            "Troca preventiva de roldanas blindadas de lat\u00e3o e regulagem de freios",
-            "Veda\u00e7\u00e3o dupla com silicone profissional anti-fungo contra infiltra\u00e7\u00f5es"
+            "Vidro temperado 8mm certificado (Norma ABNT)",
+            "Roldanas blindadas de lat\u00e3o e travas de freio",
+            "Veda\u00e7\u00e3o dupla profissional contra infiltra\u00e7\u00f5es"
           ]
         },
         'solucao-espelhos': {
-          title: "Solu\u00e7\u00f5es em Espelhos sob Medida",
-          desc: "Ampliamos e decoramos seus ambientes com espelhos lapidados ou bisot\u00ea de alt\u00edssima qualidade (Guardian / Cebrace). Medi\u00e7\u00e3o t\u00e9cnica exata e instala\u00e7\u00e3o com m\u00e1xima seguran\u00e7a.",
+          title: "Espelhos sob Medida",
+          desc: "Espelhos lapidados ou bisot\u00ea com medi\u00e7\u00e3o e fixa\u00e7\u00e3o t\u00e9cnica profissional.",
           bullets: [
-            "Espelhos sob medida para banheiros, salas, quartos e closets",
-            "Acabamento lapidado premium ou bisot\u00ea refinado de alta precis\u00e3o",
-            "Instala\u00e7\u00e3o segura com colas e selantes neutros (evita manchas escuras)",
-            "Montagem de pain\u00e9is de espelhos amplos para lojas e academias"
+            "Espelhos lapidados ou bisot\u00ea premium",
+            "Fixa\u00e7\u00e3o com selante neutro (evita manchas escuras)",
+            "Modelos personalizados para qualquer tipo de ambiente"
           ]
         },
         'solucao-molas': {
-          title: "Molas Hidr\u00e1ulicas e Regulagem",
-          desc: "Especialistas na regulagem, manuten\u00e7\u00e3o e instala\u00e7\u00e3o de molas de piso (Dorma, Soprano) e molas a\u00e9reas. Garantimos o fechamento controlado, suave e seguro de portas de vidro.",
+          title: "Molas e Regulagens",
+          desc: "Regulagem, manuten\u00e7\u00e3o e troca de molas hidr\u00e1ulicas de piso ou a\u00e9reas.",
           bullets: [
-            "Regulagem microm\u00e9trica das duas velocidades de fechamento",
-            "Ajuste de prumo e press\u00e3o de fechamento contra ventanias",
-            "Substitui\u00e7\u00e3o profissional de caixas e corpos de molas hidr\u00e1ulicas de piso",
-            "Instala\u00e7\u00e3o autorizada da linha premium de molas Dorma"
+            "Ajuste microm\u00e9trico das velocidades de fechamento",
+            "Instala\u00e7\u00e3o de molas Dorma e Soprano com garantia",
+            "Regulagem de prumo e press\u00e3o contra ventanias"
           ]
         }
       };
@@ -977,6 +973,16 @@
       const modalTitle = document.getElementById('modalTitle');
       const modalDesc = document.getElementById('modalDesc');
       const modalDetails = document.getElementById('modalDetails');
+
+      // Helper to restore WhatsApp button/actions
+      const restoreWhatsappButton = () => {
+        if (serviceModal) {
+          const modalActions = serviceModal.querySelector('.modal-actions');
+          if (modalActions) {
+            modalActions.style.display = '';
+          }
+        }
+      };
 
       if (glassItems.length === 4 && serviceModal) {
         const solutionKeys = ['solucao-portas', 'solucao-box', 'solucao-espelhos', 'solucao-molas'];
@@ -1015,11 +1021,39 @@
                 modalDetails.innerHTML = bulletsHtml;
               }
               
+              // Hide WhatsApp button for Hero Solutions popups to make it compact
+              const modalActions = serviceModal.querySelector('.modal-actions');
+              if (modalActions) {
+                modalActions.style.display = 'none';
+              }
+              
               // Open Modal
               serviceModal.classList.add('active');
               document.body.style.overflow = 'hidden';
             }
           });
+        });
+
+        // Add close listeners to restore the button when modal is closed
+        const closeBtn = document.getElementById('modalCloseBtn');
+        if (closeBtn) closeBtn.addEventListener('click', restoreWhatsappButton);
+        
+        serviceModal.addEventListener('click', (e) => {
+          if (e.target === serviceModal) {
+            restoreWhatsappButton();
+          }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            restoreWhatsappButton();
+          }
+        });
+
+        // Also add click listeners to original service cards to restore button state
+        const serviceCards = document.querySelectorAll('.service-card');
+        serviceCards.forEach(card => {
+          card.addEventListener('click', restoreWhatsappButton);
         });
       }
     });
