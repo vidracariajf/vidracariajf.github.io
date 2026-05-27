@@ -94,27 +94,32 @@
     const trigger = item.querySelector('.faq-trigger');
     const panel = item.querySelector('.faq-panel');
 
-    trigger.addEventListener('click', () => {
-      const isOpen = item.classList.contains('active');
+    if (trigger && panel) {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isOpen = item.classList.contains('active');
 
-      // Close all other items
-      faqItems.forEach(otherItem => {
-        if (otherItem !== item && otherItem.classList.contains('active')) {
-          otherItem.classList.remove('active');
-          otherItem.querySelector('.faq-panel').style.maxHeight = '0px';
+        // Close all other items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+            const otherPanel = otherItem.querySelector('.faq-panel');
+            if (otherPanel) {
+              otherPanel.style.maxHeight = null;
+            }
+          }
+        });
+
+        // Toggle current item
+        if (isOpen) {
+          item.classList.remove('active');
+          panel.style.maxHeight = null;
+        } else {
+          item.classList.add('active');
+          panel.style.maxHeight = panel.scrollHeight + 'px';
         }
       });
-
-      // Toggle current item
-      if (isOpen) {
-        item.classList.remove('active');
-        panel.style.maxHeight = '0px';
-      } else {
-        item.classList.add('active');
-        // Set max-height to scrollHeight to enable CSS transition
-        panel.style.maxHeight = panel.scrollHeight + 'px';
-      }
-    });
+    }
   });
 
   /* ==========================================================================
@@ -173,6 +178,7 @@
     ];
 
     let currentSlide = 0;
+    let autoSlide; // Declare early in the block scope to avoid TDZ reference errors entirely!
 
     function goToSlide(index) {
       currentSlide = index;
@@ -212,7 +218,7 @@
       });
     }
 
-    let autoSlide = setInterval(() => {
+    autoSlide = setInterval(() => {
       goToSlide((currentSlide + 1) % heroBgs.length);
     }, 5000);
   }
@@ -414,5 +420,6 @@
     adjustWhatsappFloat(); // Initial check on load
   }
 });
+
 
 
