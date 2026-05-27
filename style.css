@@ -1730,50 +1730,7 @@ button {
   border-bottom: 1px solid var(--cinza-escuro);
 }
 
-/* Filtros do Portfolio */
-.portfolio-filters {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 40px;
-}
 
-.filter-btn {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--cinza-escuro);
-  color: var(--cinza-claro);
-  padding: 10px 22px;
-  border-radius: 50px;
-  font-family: var(--font-primary);
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.filter-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--branco);
-  border-color: var(--cinza-claro);
-  transform: translateY(-2px);
-}
-
-.filter-btn.active {
-  background: var(--branco);
-  color: var(--preto);
-  border-color: var(--branco);
-  font-weight: 600;
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
-}
-
-/* Ocultacao suave dos itens do portfolio */
-.portfolio-item.hidden {
-  display: none !important;
-}
 
 .portfolio-grid {
   display: grid;
@@ -1869,50 +1826,7 @@ button {
 }
 
 @media (max-width: 991px) {
-  /* Filtros do Portfolio */
-.portfolio-filters {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 40px;
-}
-
-.filter-btn {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--cinza-escuro);
-  color: var(--cinza-claro);
-  padding: 10px 22px;
-  border-radius: 50px;
-  font-family: var(--font-primary);
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.filter-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--branco);
-  border-color: var(--cinza-claro);
-  transform: translateY(-2px);
-}
-
-.filter-btn.active {
-  background: var(--branco);
-  color: var(--preto);
-  border-color: var(--branco);
-  font-weight: 600;
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
-}
-
-/* Ocultacao suave dos itens do portfolio */
-.portfolio-item.hidden {
-  display: none !important;
-}
+  
 
 .portfolio-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1921,50 +1835,7 @@ button {
 }
 
 @media (max-width: 580px) {
-  /* Filtros do Portfolio */
-.portfolio-filters {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 40px;
-}
-
-.filter-btn {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--cinza-escuro);
-  color: var(--cinza-claro);
-  padding: 10px 22px;
-  border-radius: 50px;
-  font-family: var(--font-primary);
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.filter-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--branco);
-  border-color: var(--cinza-claro);
-  transform: translateY(-2px);
-}
-
-.filter-btn.active {
-  background: var(--branco);
-  color: var(--preto);
-  border-color: var(--branco);
-  font-weight: 600;
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
-}
-
-/* Ocultacao suave dos itens do portfolio */
-.portfolio-item.hidden {
-  display: none !important;
-}
+  
 
 .portfolio-grid {
     grid-template-columns: 1fr;
