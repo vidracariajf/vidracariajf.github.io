@@ -20,10 +20,10 @@
   <link rel="icon" type="image/png" href="https://i.ibb.co/GhKznfY/Design-sem-nome-2.webp">
 
   <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=1.0.15">
+  <link rel="stylesheet" href="style.css?v=1.0.16">
 
   <!-- JS Script -->
-  <script src="script.js?v=1.0.15" defer></script>
+  <script src="script.js?v=1.0.16" defer></script>
 </head>
 <body>
   <!-- Ambient background glass glows -->
@@ -275,6 +275,94 @@
     <!-- ==========================================================================
        4. SEÇÃO DE PROBLEMAS QUE A EMPRESA RESOLVE
        ========================================================================== */ -->
+    <!-- ==========================================================================
+       3.5 SECAO DE ESTATISTICAS ANIMADAS (SOCIAL PROOF)
+       ========================================================================== */ -->
+    <section class="section stats" id="estatisticas">
+      <div class="container">
+        
+        <div class="panel-boxed reveal">
+          <div class="panel-content" style="padding: 60px 40px;">
+            <div class="stats-grid">
+              
+              <div class="stat-box">
+                <span class="stat-val" data-target="500">0</span>
+                <span class="stat-lbl">Projetos Entregues</span>
+              </div>
+              
+              <div class="stat-box">
+                <span class="stat-val" data-target="2049">0</span>
+                <span class="stat-lbl">Seguidores</span>
+              </div>
+              
+              <div class="stat-box">
+                <span class="stat-val" data-target="10">0</span>
+                <span class="stat-lbl">Anos de Experi&ecirc;ncia</span>
+              </div>
+              
+              <div class="stat-box">
+                <span class="stat-val" data-target="100">0</span>
+                <span class="stat-lbl">Satisfa&ccedil;&atilde;o Garantida</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- Custom Local Styles for Statistics Section -->
+    <style>
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+        text-align: center;
+      }
+      .stat-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .stat-val {
+        font-family: var(--font-titles);
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--cinza-claro);
+        margin-bottom: 10px;
+        line-height: 1;
+      }
+      .stat-lbl {
+        font-family: var(--font-body);
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--cinza-medio);
+      }
+      @media (max-width: 991px) {
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 40px 20px;
+        }
+        .stat-val {
+          font-size: 2.5rem;
+        }
+        .stat-lbl {
+          font-size: 0.75rem;
+          letter-spacing: 1px;
+        }
+      }
+      @media (max-width: 480px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+          gap: 30px;
+        }
+      }
+    </style>
+
     <section class="section problems" id="problemas">
       <div class="container">
         
@@ -1074,6 +1162,69 @@
         });
 
         // Also add click listeners to original service cards to restore button state
+      // ==========================================
+      // Animated Counters Logic (Social Proof)
+      // ==========================================
+      const statsSection = document.getElementById('estatisticas');
+      const statValues = document.querySelectorAll('.stat-val');
+      
+      if (statsSection && statValues.length === 4) {
+        let animated = false;
+        
+        const animateCounters = () => {
+          statValues.forEach(elem => {
+            const target = parseInt(elem.getAttribute('data-target'), 10);
+            const duration = 2000; // 2 seconds
+            const startTime = performance.now();
+            
+            const updateCount = (currentTime) => {
+              const elapsedTime = currentTime - startTime;
+              const progress = Math.min(elapsedTime / duration, 1);
+              
+              // Easing out quadratic function
+              const easeProgress = progress * (2 - progress);
+              const currentValue = Math.floor(easeProgress * target);
+              
+              // Formatted values based on specific counters
+              if (target === 500) {
+                elem.textContent = currentValue + '+';
+              } else if (target === 2049) {
+                const formatted = currentValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                elem.textContent = formatted;
+              } else if (target === 10) {
+                elem.textContent = currentValue + '+';
+              } else if (target === 100) {
+                elem.textContent = currentValue + '%';
+              }
+              
+              if (progress < 1) {
+                requestAnimationFrame(updateCount);
+              } else {
+                if (target === 500) elem.textContent = '500+';
+                else if (target === 2049) elem.textContent = '2.049';
+                else if (target === 10) elem.textContent = '10+';
+                else if (target === 100) elem.textContent = '100%';
+              }
+            };
+            
+            requestAnimationFrame(updateCount);
+          });
+        };
+        
+        // Trigger counters when scrolled into view
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !animated) {
+              animated = true;
+              animateCounters();
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        
+        observer.observe(statsSection);
+      }
+
         const serviceCards = document.querySelectorAll('.service-card');
         serviceCards.forEach(card => {
           card.addEventListener('click', restoreWhatsappButton);
