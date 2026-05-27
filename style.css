@@ -1086,14 +1086,13 @@ button {
 /* Slider navigation arrows */
 .hero-slider-arrow {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 54px;
-  height: 54px;
-  background-color: rgba(255, 255, 255, 0.08);
+  bottom: 13px; /* Aligns vertically with the dots center on all screens */
+  width: 44px;
+  height: 44px;
+  background-color: rgba(20, 20, 20, 0.45); /* Glassmorphic dark overlay for solid readability */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: var(--branco);
   border-radius: 50%;
   display: flex;
@@ -1110,48 +1109,22 @@ button {
   color: #111111;
   border-color: var(--branco);
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-  transform: translateY(-50%) scale(1.08);
+  transform: scale(1.08);
 }
 
 .hero-slider-arrow:active {
-  transform: translateY(-50%) scale(0.95);
+  transform: scale(0.95);
 }
 
 .hero-slider-arrow.prev {
-  left: 40px;
+  left: calc(50% - 92px); /* Spaced perfectly for 44px width */
 }
 
 .hero-slider-arrow.next {
-  right: 40px;
+  right: calc(50% - 92px);
 }
 
 /* Responsive adjustment for arrows */
-@media (max-width: 991px) {
-  .hero-slider-arrow {
-    top: auto;
-    bottom: 15px; /* Aligns vertically with the dots center */
-    transform: none;
-    width: 40px;
-    height: 40px;
-    background-color: rgba(20, 20, 20, 0.45); /* Slightly darker for readability on various background slides */
-    border-color: rgba(255, 255, 255, 0.12);
-  }
-  .hero-slider-arrow:hover {
-    transform: scale(1.08); /* Simpler scale transitions since top/bottom has changed */
-    background-color: var(--branco);
-    color: #111111;
-  }
-  .hero-slider-arrow:active {
-    transform: scale(0.95);
-  }
-  .hero-slider-arrow.prev {
-    left: calc(50% - 90px);
-  }
-  .hero-slider-arrow.next {
-    right: calc(50% - 90px);
-  }
-}
-
 @media (max-width: 480px) {
   .hero-slider-arrow {
     width: 36px;
@@ -2836,6 +2809,7 @@ button {
     gap: 6px !important;
   }
 }
+
 
 
 
