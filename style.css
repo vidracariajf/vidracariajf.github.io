@@ -2049,7 +2049,7 @@ button {
 .faq-panel {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: max-height 0.28s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .faq-content {
@@ -2070,7 +2070,7 @@ button {
 }
 
 .faq-item.open .faq-panel {
-  max-height: 250px; /* Safe height to expand accordion smoothly without JS layout calculations */
+  max-height: 160px; /* Snappy safe height to expand accordion smoothly without closing delay */
 }
 
 .faq-item.open .faq-icon-box {
@@ -2813,6 +2813,7 @@ button {
     gap: 6px !important;
   }
 }
+
 
 
 
