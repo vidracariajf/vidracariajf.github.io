@@ -20,10 +20,10 @@
   <link rel="icon" type="image/png" href="https://i.ibb.co/GhKznfY/Design-sem-nome-2.webp">
 
   <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=1.0.19">
+  <link rel="stylesheet" href="style.css?v=1.0.20">
 
   <!-- JS Script -->
-  <script src="script.js?v=1.0.19" defer></script>
+  <script src="script.js?v=1.0.20" defer></script>
 </head>
 <body>
   <!-- Ambient background glass glows -->
@@ -1035,6 +1035,476 @@
       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
     </button>
   </div>
+
+  <!-- ==========================================================================
+     16. CUSTOM ALBUM PREVIEW MODAL & FULLSCREEN VIEWER
+     ========================================================================== -->
+  <!-- Album Preview Modal (Sub-gallery) -->
+  <div class="modal-overlay" id="albumPreviewModal">
+    <div class="modal-card album-preview-card">
+      <button class="modal-close" id="albumPreviewCloseBtn" aria-label="Fechar galeria">&times;</button>
+      <h3 id="albumModalTitle" style="font-family: var(--font-titles); font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 5px; color: var(--preto);">Ãlbum</h3>
+      <p style="font-family: var(--font-body); font-size: 0.95rem; color: var(--cinza-medio); margin-bottom: 25px;">Clique em qualquer imagem abaixo para ampliÃ¡-la</p>
+      
+      <div class="album-preview-grid" id="albumModalGrid">
+        <!-- Generado dinamicamente via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Full-screen Image Viewer -->
+  <div class="album-viewer-overlay" id="albumViewer">
+    <button class="album-viewer-close" id="albumViewerCloseBtn" aria-label="Fechar visualizador">&times;</button>
+    
+    <button class="album-viewer-arrow prev" id="albumViewerPrevBtn" aria-label="Imagem anterior">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+    </button>
+    
+    <div class="album-viewer-content">
+      <img src="" alt="" id="albumViewerImg" class="album-viewer-img">
+    </div>
+    
+    <button class="album-viewer-arrow next" id="albumViewerNextBtn" aria-label="PrÃ³xima imagem">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+
+  <style>
+    /* Estilos isolados para as Subgalerias e Visualizador */
+    .album-preview-card {
+      max-width: 900px !important;
+      padding: 40px 30px !important;
+    }
+    
+    .album-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 10px;
+      max-height: 60vh;
+      overflow-y: auto;
+      padding: 5px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--cinza-escuro) transparent;
+    }
+    
+    /* Scrollbar personalizado para a grade de fotos */
+    .album-preview-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+    .album-preview-grid::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .album-preview-grid::-webkit-scrollbar-thumb {
+      background-color: var(--cinza-escuro);
+      border-radius: 6px;
+    }
+    
+    .album-preview-item {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: #f7f7f9;
+    }
+    
+    .album-preview-item:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+    }
+    
+    .album-preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .album-preview-item:hover img {
+      transform: scale(1.08);
+    }
+    
+    .album-preview-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .album-preview-item:hover .album-preview-overlay {
+      opacity: 1;
+    }
+    
+    .album-preview-overlay svg {
+      color: #fff;
+      transform: scale(0.8);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    .album-preview-item:hover .album-preview-overlay svg {
+      transform: scale(1);
+    }
+    
+    /* Visualizador de Tela Cheia */
+    .album-viewer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(10, 10, 10, 0.96);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 4000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    .album-viewer-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .album-viewer-content {
+      position: relative;
+      width: 90%;
+      max-width: 1100px;
+      max-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .album-viewer-img {
+      max-width: 100%;
+      max-height: 85vh;
+      border-radius: 8px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      object-fit: contain;
+      user-select: none;
+      transform: scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    .album-viewer-overlay.active .album-viewer-img {
+      transform: scale(1);
+    }
+    
+    .album-viewer-close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      background: none;
+      border: none;
+      font-size: 40px;
+      color: #fff;
+      cursor: pointer;
+      line-height: 1;
+      transition: transform 0.25s ease, color 0.25s ease;
+      z-index: 4010;
+    }
+    
+    .album-viewer-close:hover {
+      transform: rotate(90deg) scale(1.1);
+      color: #ccc;
+    }
+    
+    .album-viewer-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s, color 0.25s;
+      z-index: 4005;
+    }
+    
+    .album-viewer-arrow:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      transform: translateY(-50%) scale(1.08);
+    }
+    
+    .album-viewer-arrow:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+    
+    .album-viewer-arrow.prev {
+      left: 30px;
+    }
+    
+    .album-viewer-arrow.next {
+      right: 30px;
+    }
+    
+    @media (max-width: 991px) {
+      .album-preview-card {
+        padding: 30px 20px !important;
+      }
+      .album-preview-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .album-viewer-arrow {
+        width: 44px;
+        height: 44px;
+      }
+      .album-viewer-arrow.prev {
+        left: 15px;
+      }
+      .album-viewer-arrow.next {
+        right: 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .album-preview-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let currentAlbumImages = [];
+      let currentImageIndex = 0;
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      // 1. Interceptar Cliques na Fase de Captura nos cards de portfÃ³lio
+      const initInterception = () => {
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        if (portfolioItems.length > 0) {
+          portfolioItems.forEach(item => {
+            // Alterar o cursor para pointer e interceptar cliques
+            item.style.cursor = 'pointer';
+            item.addEventListener('click', (e) => {
+              // Interromper a propagaÃ§Ã£o imediatamente na fase de captura
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              e.preventDefault();
+              
+              const galleryName = item.getAttribute('data-gallery');
+              if (galleryName) {
+                openSubGallery(galleryName);
+              }
+            }, { capture: true });
+          });
+        }
+      };
+
+      // 2. Abrir o Modal da Subgaleria
+      const openSubGallery = (galleryName) => {
+        const galleryElements = document.querySelectorAll(`[data-gallery="${galleryName}"]`);
+        currentAlbumImages = [];
+        
+        galleryElements.forEach(el => {
+          const src = el.getAttribute('data-src');
+          const title = el.getAttribute('data-title') || '';
+          const category = el.getAttribute('data-category') || '';
+          
+          if (src && !currentAlbumImages.some(img => img.src === src)) {
+            currentAlbumImages.push({ src, title, category });
+          }
+        });
+        
+        if (currentAlbumImages.length === 0) return;
+        
+        // Atualizar TÃ­tulo do Modal
+        const modalTitle = document.getElementById('albumModalTitle');
+        if (modalTitle) {
+          modalTitle.textContent = currentAlbumImages[0].category || 'Galeria';
+        }
+        
+        // Renderizar Grade de Miniaturas
+        const gridContainer = document.getElementById('albumModalGrid');
+        if (gridContainer) {
+          gridContainer.innerHTML = '';
+          currentAlbumImages.forEach((imgData, index) => {
+            const item = document.createElement('div');
+            item.className = 'album-preview-item';
+            item.setAttribute('data-index', index);
+            
+            // Otimizar miniaturas usando o proxy CDN (reduz de 1200px para 500px de largura)
+            const thumbUrl = imgData.src.replace('w=1200', 'w=500');
+            
+            item.innerHTML = `
+              <img src="${thumbUrl}" alt="${imgData.title}" loading="lazy">
+              <div class="album-preview-overlay">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </div>
+            `;
+            
+            item.addEventListener('click', () => {
+              openFullScreenViewer(index);
+            });
+            
+            gridContainer.appendChild(item);
+          });
+        }
+        
+        // Abrir Modal de VisualizaÃ§Ã£o
+        const previewModal = document.getElementById('albumPreviewModal');
+        if (previewModal) {
+          previewModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      };
+
+      // 3. Fechar o Modal da Subgaleria
+      const closeSubGalleryModal = () => {
+        const previewModal = document.getElementById('albumPreviewModal');
+        if (previewModal) {
+          previewModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      };
+
+      // 4. Abrir Visualizador em Tela Cheia
+      const openFullScreenViewer = (index) => {
+        currentImageIndex = index;
+        updateFullScreenImage();
+        
+        const viewer = document.getElementById('albumViewer');
+        if (viewer) {
+          viewer.classList.add('active');
+        }
+      };
+
+      // 5. Fechar Visualizador em Tela Cheia
+      const closeFullScreenViewer = () => {
+        const viewer = document.getElementById('albumViewer');
+        if (viewer) {
+          viewer.classList.remove('active');
+        }
+      };
+
+      // 6. Atualizar Imagem no Visualizador
+      const updateFullScreenImage = () => {
+        const viewerImg = document.getElementById('albumViewerImg');
+        if (viewerImg && currentAlbumImages[currentImageIndex]) {
+          viewerImg.src = currentAlbumImages[currentImageIndex].src;
+          viewerImg.alt = currentAlbumImages[currentImageIndex].title || '';
+        }
+      };
+
+      // 7. NavegaÃ§Ã£o Sequencial
+      const showNextImage = () => {
+        if (currentAlbumImages.length === 0) return;
+        currentImageIndex = (currentImageIndex + 1) % currentAlbumImages.length;
+        updateFullScreenImage();
+      };
+
+      const showPrevImage = () => {
+        if (currentAlbumImages.length === 0) return;
+        currentImageIndex = (currentImageIndex - 1 + currentAlbumImages.length) % currentAlbumImages.length;
+        updateFullScreenImage();
+      };
+
+      // 8. Event Listeners dos Componentes
+      const previewCloseBtn = document.getElementById('albumPreviewCloseBtn');
+      if (previewCloseBtn) previewCloseBtn.addEventListener('click', closeSubGalleryModal);
+      
+      const previewModal = document.getElementById('albumPreviewModal');
+      if (previewModal) {
+        previewModal.addEventListener('click', (e) => {
+          if (e.target === previewModal) {
+            closeSubGalleryModal();
+          }
+        });
+      }
+
+      const viewerCloseBtn = document.getElementById('albumViewerCloseBtn');
+      if (viewerCloseBtn) viewerCloseBtn.addEventListener('click', closeFullScreenViewer);
+      
+      const viewerPrevBtn = document.getElementById('albumViewerPrevBtn');
+      if (viewerPrevBtn) viewerPrevBtn.addEventListener('click', showPrevImage);
+      
+      const viewerNextBtn = document.getElementById('albumViewerNextBtn');
+      if (viewerNextBtn) viewerNextBtn.addEventListener('click', showNextImage);
+
+      const viewer = document.getElementById('albumViewer');
+      if (viewer) {
+        viewer.addEventListener('click', (e) => {
+          if (e.target === viewer) {
+            closeFullScreenViewer();
+          }
+        });
+        
+        // Gestos de deslizar (swipe) no mobile
+        viewer.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        viewer.addEventListener('touchend', (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          const threshold = 50;
+          if (touchEndX < touchStartX - threshold) {
+            showNextImage();
+          } else if (touchEndX > touchStartX + threshold) {
+            showPrevImage();
+          }
+        }, { passive: true });
+      }
+
+      // 9. Atalhos do Teclado (Acessibilidade)
+      document.addEventListener('keydown', (e) => {
+        const viewerActive = viewer && viewer.classList.contains('active');
+        const modalActive = previewModal && previewModal.classList.contains('active');
+        
+        if (viewerActive) {
+          if (e.key === 'Escape') {
+            closeFullScreenViewer();
+            e.preventDefault();
+          } else if (e.key === 'ArrowRight') {
+            showNextImage();
+            e.preventDefault();
+          } else if (e.key === 'ArrowLeft') {
+            showPrevImage();
+            e.preventDefault();
+          }
+        } else if (modalActive) {
+          if (e.key === 'Escape') {
+            closeSubGalleryModal();
+            e.preventDefault();
+          }
+        }
+      });
+
+      // Inicializar interceptaÃ§Ã£o
+      initInterception();
+    });
+  </script>
 
     <!-- Isolated script block for Solutions Inteligentes Popup Modals -->
   <script>
