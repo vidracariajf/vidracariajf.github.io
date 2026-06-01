@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -643,7 +643,7 @@
                 </div>
               </div>
               
-              <!-- Galeria 6: Cozinha / Ãrea -->
+              <!-- Galeria 6: Cozinha / Área -->
               <div class="portfolio-item reveal delay-200" data-src="https://images.weserv.nl/?url=i.ibb.co/xtV4MyGb/vidro-14-cozinha.webp&w=1200&q=85" data-title="Divis&oacute;ria de Cozinha em Vidro" data-category="Cozinha / &Aacute;rea" data-gallery="cozinha">
                 <div class="portfolio-placeholder" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5)), url('https://images.weserv.nl/?url=i.ibb.co/xtV4MyGb/vidro-14-cozinha.webp&w=500&q=85');">
                   <div class="portfolio-placeholder-content">
@@ -1043,8 +1043,8 @@
   <div class="modal-overlay" id="albumPreviewModal">
     <div class="modal-card album-preview-card">
       <button class="modal-close" id="albumPreviewCloseBtn" aria-label="Fechar galeria">&times;</button>
-      <h3 id="albumModalTitle" style="font-family: var(--font-titles); font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 5px; color: var(--preto);">Ãlbum</h3>
-      <p style="font-family: var(--font-body); font-size: 0.95rem; color: var(--cinza-medio); margin-bottom: 25px;">Clique em qualquer imagem abaixo para ampliÃ¡-la</p>
+      <h3 id="albumModalTitle" style="font-family: var(--font-titles); font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 5px; color: var(--preto);">Álbum</h3>
+      <p style="font-family: var(--font-body); font-size: 0.95rem; color: var(--cinza-medio); margin-bottom: 25px;">Clique em qualquer imagem abaixo para ampliá-la</p>
       
       <div class="album-preview-grid" id="albumModalGrid">
         <!-- Generado dinamicamente via JS -->
@@ -1064,7 +1064,7 @@
       <img src="" alt="" id="albumViewerImg" class="album-viewer-img">
     </div>
     
-    <button class="album-viewer-arrow next" id="albumViewerNextBtn" aria-label="PrÃ³xima imagem">
+    <button class="album-viewer-arrow next" id="albumViewerNextBtn" aria-label="Próxima imagem">
       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
     </button>
   </div>
@@ -1298,7 +1298,7 @@
       let touchStartX = 0;
       let touchEndX = 0;
 
-      // 1. Interceptar Cliques na Fase de Captura nos cards de portfÃ³lio
+      // 1. Interceptar Cliques na Fase de Captura nos cards de portfólio
       const initInterception = () => {
         const portfolioItems = document.querySelectorAll('.portfolio-item');
         if (portfolioItems.length > 0) {
@@ -1306,7 +1306,7 @@
             // Alterar o cursor para pointer e interceptar cliques
             item.style.cursor = 'pointer';
             item.addEventListener('click', (e) => {
-              // Interromper a propagaÃ§Ã£o imediatamente na fase de captura
+              // Interromper a propagação imediatamente na fase de captura
               e.stopPropagation();
               e.stopImmediatePropagation();
               e.preventDefault();
@@ -1337,7 +1337,7 @@
         
         if (currentAlbumImages.length === 0) return;
         
-        // Atualizar TÃ­tulo do Modal
+        // Atualizar Título do Modal
         const modalTitle = document.getElementById('albumModalTitle');
         if (modalTitle) {
           modalTitle.textContent = currentAlbumImages[0].category || 'Galeria';
@@ -1373,7 +1373,7 @@
           });
         }
         
-        // Abrir Modal de VisualizaÃ§Ã£o
+        // Abrir Modal de Visualização
         const previewModal = document.getElementById('albumPreviewModal');
         if (previewModal) {
           previewModal.classList.add('active');
@@ -1418,7 +1418,7 @@
         }
       };
 
-      // 7. NavegaÃ§Ã£o Sequencial
+      // 7. Navegação Sequencial
       const showNextImage = () => {
         if (currentAlbumImages.length === 0) return;
         currentImageIndex = (currentImageIndex + 1) % currentAlbumImages.length;
@@ -1501,7 +1501,7 @@
         }
       });
 
-      // Inicializar interceptaÃ§Ã£o
+      // Inicializar interceptação
       initInterception();
     });
   </script>
